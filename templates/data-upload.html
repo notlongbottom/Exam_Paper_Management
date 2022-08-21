@@ -1,0 +1,90 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Data Upload</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="">Home</a></li>
+                <li class="breadcrumb-item active">Data Upload</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <section class="section dashboard">
+        <div class="card">
+            <div class="card-body p-5">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label>Course</label>
+                            <select class="form-select" aria-label="Default select example" name="course">
+                                {% for data in courses %}
+                                <option value="{{data.id}}" selected>{{data.course_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Semester</label>
+                            <select class="form-control" aria-label="Default select example" name="semester">
+                                {% for data in semester %}
+                                <option value="{{data.id}}" selected>{{data.semester_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>subject</label>
+                            <select class="form-control get_subject" id="subject_id" aria-label="Default select example" name="subject" required>
+                                {% for data in subjects %}
+                                <option value="{{data.subject_name}}" selected>{{data.subject_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <!--    <div class="col-md-6">
+                            <label>subject</label>
+                            <input class="form-control" name="subject" type="text" required />
+                        </div> -->
+              <!--           <div class="col-md-6">
+                            <label>subject code</label>
+                            <select class="form-control" aria-label="Default select example" name="subject_code">
+                                {% for data in subjects %}
+                                <option value="{{data.subject_code}}" selected>{{data.subject_code}}</option>
+                                {% endfor %}
+                            </select>
+                        </div> -->
+                                            <div class="col-md-6">
+                            <label>Subjectcode</label>
+                            <input id="subject_code"  readonly class="form-control" name="subject_code" type="text" required/>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Upload file</label>
+                            <input class="form-control" name="paper" type="file" required />
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary mx-auto">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- End #main -->
+{% endblock %}

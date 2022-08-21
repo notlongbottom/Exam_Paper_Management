@@ -1,0 +1,67 @@
+{% extends 'base_template.html' %}
+{% block content %}
+{% load static %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Rejected Uploads</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item active">Rejected Uploads</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="card">
+            <div class="card-body">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+
+                            <th>course</th>
+                            <th>semester</th>
+                            <th>subject</th>
+                            <th>subjectcode</th>
+                            <th>status</th>
+                                <th>Feedback<th>
+                            <th>Action</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in rejected %}
+                        <tr>
+
+                            <td>{{data.course}}</td>
+                            <td>{{data.semester}}</td>
+                            <td>{{data.subject}}</td>
+                            <td>{{data.subject_code}}</td>
+                            <td>{{data.paper_status|default:'-'}}</td>
+                              <td>
+                                <a href="{% url 'Rejected-Upload:given_feedback' data.id %}" class="d-inline-block btn btn-primary me-2">View</a>
+                               
+                            </td>
+                             <td>
+                                <a href="{% url 'Data-Upload:UpdateDataUploadView' data.id %}" class="d-inline-block btn btn-primary me-2"><i class="bi bi-pencil"></i></a>
+                                <a href="javascript:void(0)"  class="d-inline-block btn btn-danger delete" data-id="{{data.id}}"><i class="bi bi-bucket-fill"></i></a>
+                            </td>
+                            
+
+                        </tr>
+                        {% endfor %}
+                     
+
+                    </tbody>
+                </table>
+              
+            </div>
+        </div>
+    </section>
+
+</main>
+<!-- End #main -->
+{% endblock %}
